@@ -1,6 +1,6 @@
 mongoose = require('mongoose')
 
-const mongoUri = 'mongodb+srv://boream:boream@boream-z9ztt.mongodb.net/films?retryWrites=true&w=majority';
+const mongoUri = '';
 
 exports.connect = async () => {
     console.log('Conecting Mongo DB')
