@@ -2,7 +2,9 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 //const logger = require('koa-logger')
 
+// ROUTES
 const films = require('./routes/films.routes');
+const bso = require('./routes/bso.routes');
 
 const db = require('./config/db.config');
 
@@ -35,7 +37,7 @@ if (process.env.NODE_ENV === 'dev') {
  });
 
 app.use(films.routes());
-
+app.use(bso.routes());
 
 
 

@@ -1,15 +1,15 @@
 const Router = require('koa-router');
 
-const FilmModel = require('../models/film.model');
+const BsoModel = require('../models/bso.model');
 
 const router = new Router({
-    prefix: '/films'
+    prefix: '/bso'
 });
 
 router
   .get('/', async (ctx, next) => {
     const query = ctx.request.query;
-    await FilmModel.find(query)
+    await BsoModel.find(query)
     .then(result => {
         ctx.body = result;
     }).catch(err => {
@@ -21,7 +21,7 @@ router
 
   })
   .post('/', async (ctx, next) => {
-    await  FilmModel(ctx.request.body).save()
+    await  BsoModel(ctx.request.body).save()
     .then(result => {
         ctx.body = result;
     }).catch(err => {
@@ -32,7 +32,7 @@ router
     });
   })
   .put('/:id', async (ctx, next) => {
-    await FilmModel(ctx.request.body).save()
+    await BsoModel(ctx.request.body).save()
     .then(result => {
         ctx.body = result;
     }).catch(err => {
@@ -46,7 +46,7 @@ router
     ctx.body = 'DEL';
   })
   .get('/:id', async (ctx, next) => {
-    await FilmModel.findById(ctx.params.id)
+    await BsoModel.findById(ctx.params.id)
     .then(result => {
         ctx.body = result;
     }).catch(err => {
