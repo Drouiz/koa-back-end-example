@@ -1,29 +1,15 @@
 const Koa = require('koa');
-//const logger = require('koa-logger')
-
-const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-
-const app = new Koa();
-const router = new Router();
-
-const mongoose = require('mongoose');
-
-//const mongoUri = 'mongodb://192.168.99.100:27017/films';
-const mongoUri = 'mongodb+srv://boream:boream@boream-z9ztt.mongodb.net/films?retryWrites=true&w=majority';
-db = mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true }).
-  catch(error => console.log(error));
-
+//const logger = require('koa-logger')
 
 const films = require('./routes/films.routes');
 
+const db = require('./config/db.config');
 
-const onDBReady = (err) => {
-  if (err) {
-    console.log('Error connecting', err);
-    throw new Error('Error connecting', err);
-  }
-};
+//DB CONECTING
+(() => db.connect())();
+
+const app = new Koa();
 
 app.listen(3000, function(err) {
   if (err) {
@@ -41,27 +27,13 @@ if (process.env.NODE_ENV === 'dev') {
   //app.use(logger());
 }
 
-//MW OPTENCION IP
+// CLIENT IP 
  app.use(async (ctx, next) => {
    const clientIP = ctx.request.ip;
-   console.log(clientIP);
+   console.log('Client IP: ' + clientIP);
    await next();
  });
 
- router.post('/login',
- async (ctx, next) => { 
-   console.log('hola')
-   await next();
- }
- ,async (ctx, next) => {
-  console.log('login')
-  const email = ctx.request.body.email;
-  const _id =  ctx.request.body._id;
-  ctx.body =  await generateToken(email, _id)
-})
-
-
-app.use(router.routes());
 app.use(films.routes());
 
 
